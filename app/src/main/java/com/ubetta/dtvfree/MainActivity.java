@@ -104,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSION_REQUEST_DOWNLOAD);
         }
     }
-    private final String homePage = "https://datafreetv.live/";
+    private final String homePage = "https://livecricketsl.xyz/";
     private final String helppage = "https://telegra.ph/Help-Memu-11-22";
 
-    private final String site1 = "https://datafreetv.live/dtv.html";
-    private final String site2 = "https://datafreetv.live/peotvgo.html";
+    private final String site1 = "https://watch.livecricketsl.xyz/dtv/catch.html";
+    private final String site2 = "https://watch.livecricketsl.xyz/peotvgo/index.htmll";
     private boolean nocursor = false;
-    private final String sourcecode = "https://github.com/InukaAsith/DTVfree/releases";
-    private final String version = "v4.3.2";
+    private final String sourcecode = "https://github.com/InukaAsith/LCSL/releases";
+    private final String version = "v1.2.2";
     private final int UP = 0,DOWN = 1,LEFT = 2,RIGHT = 3;
     private boolean isError; // A flag to indicate if there is an error
     private boolean isdarkm = false;
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         if (isFirstTime) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Welcome Back");
-            builder.setMessage("Thanks for installing application. 🎉 \n\nData Free TV" + version + "\nCurrent Homepage:" + homepge + "\n\nFor faster performance and reduced data usage this application uses offline webpage loading as default. \nWhen using offline mode you need to update or refresh website to get latest features. \n\n Android TV users can turn on or off mouse cursor based on your preference. \n\nYou can change these settings anytime from settings menu or back button menu. \n\nPlease don't forget to join telegram channel for latest updates.\nEnjoy 😊\n\nDo you want to use offline loading?");
+            builder.setMessage("Thanks for installing application. 🎉 \n\nLive Cricket Sri Lanka" + version + "\nCurrent Homepage:" + homepge + "\n\nFor faster performance and reduced data usage this application uses offline webpage loading as default. \nWhen using offline mode you need to update or refresh website to get latest features. \n\n Android TV users can turn on or off mouse cursor based on your preference. \n\nYou can change these settings anytime from settings menu or back button menu. \n\nPlease don't forget to join telegram channel for latest updates.\nEnjoy 😊\n\nDo you want to use offline loading?");
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
