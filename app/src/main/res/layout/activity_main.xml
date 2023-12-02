@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:focusable="false"
+        android:focusableInTouchMode="true">
+
+    </WebView>
+
+    <ImageButton
+        android:id="@+id/fab"
+        android:layout_width="70dp"
+        android:layout_height="67dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/settings_button_background_default"
+        android:contentDescription="Home Button"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:src="@drawable/ic_settings"
+        android:visibility="gone"
+        tools:ignore="DuplicateClickableBoundsCheck" />
+
+
+    <ImageButton
+        android:id="@+id/hab"
+        android:layout_width="70dp"
+        android:layout_height="67dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/settings_button_background_default"
+        android:contentDescription="Home Button"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:src="@drawable/ic_home"
+        android:visibility="gone"
+        tools:ignore="DuplicateClickableBoundsCheck" />
+
+
+    <ImageView
+        android:id="@+id/mouse_pointer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:focusable="false"
+        android:visibility="gone"
+        app:srcCompat="@mipmap/mouse_pointer"
+        android:contentDescription="@string/mouse_pointer"/>
+    <ProgressBar
+        android:id="@+id/loading_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/dialog_back"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorHalfTransparentBlack"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/dialog_panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="330dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="50dp"
+                android:autofillHints="@string/search_bar"
+                android:background="@drawable/search_bar_background"
+                android:cursorVisible="false"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="5dp"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+
+            </EditText>
+
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider3"
+                android:text="   Offline Pages"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#AEACAC" />
+
+            <ImageButton
+                android:id="@+id/home_button"
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="50dp"
+                android:layout_toEndOf="@+id/search_bar"
+                android:background="@drawable/voice_button_background_default"
+                android:contentDescription="Home Button"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_home"
+                tools:ignore="DuplicateClickableBoundsCheck" />
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="@string/back_button"
+                android:focusable="true"
+                android:src="@drawable/ic_back" />
+
+            <ImageButton
+                android:id="@+id/forward_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/back_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="@string/forward_button"
+                android:src="@drawable/ic_forward" />
+
+            <ImageButton
+                android:id="@+id/cursor_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/forward_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="cursor on off"
+                android:src="@drawable/ic_cursor" />
+
+            <ImageButton
+                android:id="@+id/refresh_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/cursor_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="@string/refresh_button"
+                android:src="@drawable/ic_refresh" />
+
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/refresh_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="edit Homepage"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_edit" />
+
+            <ImageButton
+                android:id="@+id/update_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/edit_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="Close"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_update" />
+
+            <ImageButton
+                android:id="@+id/close_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/search_bar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/update_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="Close"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_close" />
+
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_below="@+id/back_button"
+                android:background="?android:attr/listDivider" />
+
+            <ImageButton
+                android:id="@+id/addsaved_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textView"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="Add to offline pages"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_save" />
+
+            <ImageButton
+                android:id="@+id/remsaved_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textView"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/addsaved_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="remove from offline pages"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_remsave" />
+
+            <ImageButton
+                android:id="@+id/clear_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/textView"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/remsaved_button"
+                android:background="@drawable/button_default_background"
+                android:contentDescription="Close"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/ic_updatesite" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
+
