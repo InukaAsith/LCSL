@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -47,6 +48,8 @@ import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.URLUtil;
 
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -111,13 +114,115 @@ public class MainActivity extends AppCompatActivity {
     private final String site2 = "https://watch.livecricketsl.xyz/peotvgo/index.htmll";
     private boolean nocursor = false;
     private final String sourcecode = "https://github.com/InukaAsith/LCSL/releases";
-    private final String version = "v1.2.2";
+    private final String version = "v1.3.2";
     private final int UP = 0,DOWN = 1,LEFT = 2,RIGHT = 3;
     private boolean isError; // A flag to indicate if there is an error
     private boolean isdarkm = false;
+    private boolean canvas = false;
     private boolean isLongPressDone = false;
-
+    Handler handler = new Handler(Looper.getMainLooper());
     private String lastSuccessUrl;
+
+    public void canvasIsPresent() {
+
+
+        CharSequence[] items = {"720p", "576p", "432p", "360p", "Auto"};
+
+// create an alert dialog builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Resolution");
+
+// add the items to the dialog
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case 0:
+                        // Execute a JavaScript code
+                        webView.evaluateJavascript("var button = document.getElementsByClassName('explicit-resolution')[0]; if (button != null) { button.click(); }", null);
+                        dialog.cancel();
+                        break;
+                    case 1:
+                        webView.evaluateJavascript("var button = document.getElementsByClassName('explicit-resolution')[1]; if (button != null) { button.click(); }", null);
+                        dialog.cancel();
+                        break;
+
+                    case 2:
+                        webView.evaluateJavascript("var button = document.getElementsByClassName('explicit-resolution')[2]; if (button != null) { button.click(); }" , null);
+                        dialog.cancel();
+                        break;
+
+                    case 3:
+                        webView.evaluateJavascript("var button = document.getElementsByClassName('explicit-resolution')[3]; if (button != null) { button.click(); }", null);
+                        dialog.cancel();
+                        break;
+                    case 4:
+
+                        webView.evaluateJavascript( "var button = document.getElementsByClassName('explicit-resolution')[4]; if (button != null) { button.click(); }", null);
+                        dialog.cancel();
+                        break;
+
+
+                }
+
+            }
+        });
+
+        AlertDialog dialog1 = builder.create();
+        if(!dialog1.isShowing()){
+            dialog1.show();
+        }
+
+    }
+
+    public void canvasIsAbsent() {
+        canvas = false;
+        // Code to run when the canvas element is absent
+    }
+    public void canvasIsthere() {
+        canvas = true;
+        // Code to run when the canvas element is absent
+    }
+
+
+    public class MyJavaScriptInterface {
+        Context mContext;
+        WebView mWebView;
+
+        // Instantiate the interface and set the context and WebView
+        MyJavaScriptInterface(Context c, WebView webView) {
+            mContext = c;
+            mWebView = webView;
+        }
+            @JavascriptInterface
+            public void checkCanvasPresence () {
+                // Execute JavaScript to check for the canvas element
+                mWebView.post(() -> mWebView.evaluateJavascript("var canvas = document.getElementsByClassName('explicit-resolution')[0];" +
+                        "if (canvas != null) { MyJSInterface.canvasPresent(); } else { null; }", null));
+            }
+
+            @JavascriptInterface
+            public void canvasPresent () {
+                // Code to run in MainActivity when canvas is present
+                ((MainActivity) mContext).canvasIsthere();
+            }
+
+            @JavascriptInterface
+            public void canvasAbsent () {
+                // Code to run in MainActivity when canvas is absent
+                ((MainActivity) mContext).canvasIsAbsent();
+            }
+
+        @JavascriptInterface
+        public void evaluateScript(String script) {
+            // Execute the script using eval()
+            mWebView.post(() -> mWebView.evaluateJavascript("eval(" + script + ")", null));
+        }
+
+
+        // Other methods...
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,25 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Define the custom JavaScript interface class
-        class MyJavaScriptInterface {
-            // Define a method to play or pause the video
-            @JavascriptInterface
-            public void playOrPause () {
-                // Get the video element from the webview
-                webView.evaluateJavascript ("var video = document.querySelector('video');", null);
-                // Toggle the playback state
-                webView.evaluateJavascript ("if (video.paused) { video.play(); } else { video.pause(); }", null);
-            }
 
-            // Define a method to seek forward or backward the video
-            @JavascriptInterface
-            public void seek (int seconds) {
-                // Get the video element from the webview
-                webView.evaluateJavascript ("var video = document.querySelector('video');", null);
-                // Seek the video by the given seconds
-                webView.evaluateJavascript ("video.currentTime += " + seconds + ";", null);
-            }
-        }
 
 // Add the custom JavaScript interface to the webview
 
@@ -212,6 +299,8 @@ public class MainActivity extends AppCompatActivity {
             // show the dialog
             builder.show();
         }
+        // Create a Handler object
+
 
         homeButton = findViewById(R.id.home_button);
         cursorButton = findViewById(R.id.cursor_button);
@@ -770,7 +859,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar loadingIndicator = findViewById(R.id.loading_indicator);
         webView.setWebViewClient(browser = new Browser(searchBar,webView));
         webView.setWebChromeClient(webClient = new WebClient(this));
-        webView.addJavascriptInterface (new MyJavaScriptInterface (), "MyJSInterface");
+        webView.addJavascriptInterface (new MyJavaScriptInterface(this, webView), "MyJSInterface");
         WebSettings webSettings = webView.getSettings();
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
@@ -785,6 +874,8 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
         webSettings.setLoadWithOverviewMode(true);
+        webView.setFocusable(true);
+        webView.setFocusableInTouchMode(true);
         if (darkmode){
 
             if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
@@ -903,7 +994,22 @@ public class MainActivity extends AppCompatActivity {
                 //webView.evaluateJavascript("document.getElementById('fullscreenButton').click();", null);
                // webView.evaluateJavascript("var video = document.querySelector('video'); if (video.webkitEnterFullscreen) { video.webkitEnterFullscreen(); }", null);
                 // If the device is not an Android TV, hide the status bar and the navigation bar
+                //webView.evaluateJavascript("MyJSInterface.checkfullscreenPresence()", null);
+                webView.evaluateJavascript("var canvas = document.getElementsByClassName('shaka-overflow-button'); if (canvas != null) { return true; } else { return false; }", new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String value) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Get the current focused element in the WebView
+                                View element = getCurrentFocus();
 
+                                // Perform a click on the element
+                                element.performClick();
+                            }
+                        }, 10000); // Delay for 10 seconds
+                    }
+                });
 
                     if (url.equals(homepge)) {
                         hab.setVisibility(View.GONE);
@@ -919,8 +1025,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-
-  
 
             }
 
@@ -1049,6 +1153,8 @@ public class MainActivity extends AppCompatActivity {
         assert dm != null;
         dm.enqueue(request);
     }
+
+    // Code to run when the canvas element is absent
 
     private void showLongPressMenu(String linkUrl, String imageUrl) {
         String url;
@@ -1499,7 +1605,22 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 */
+                  if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                        String jsCode = "var playButton = document.getElementsByClassName('shaka-play-button')[0];" +
+                                "playButton.setAttribute('tabindex', '1');" +
+                                "playButton.focus();";
+                        webView.evaluateJavascript(jsCode, null);
+                        return super.dispatchKeyEvent(event);
+                    }
+                    if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+                        webView.evaluateJavascript("MyJSInterface.checkCanvasPresence()", null);
+                        if(canvas){
+                            canvasIsPresent();
+                        }
 
+
+                        return super.dispatchKeyEvent(event);
+                    }
                     if (keyCode != KeyEvent.KEYCODE_BACK){
                         return super.dispatchKeyEvent(event);
                         //dialogBack.setVisibility(View.VISIBLE);
