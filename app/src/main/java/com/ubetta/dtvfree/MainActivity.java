@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void canvasIsAbsent() {
         canvas = false;
         // Code to run when the canvas element is absent
@@ -1621,6 +1622,15 @@ public class MainActivity extends AppCompatActivity {
 
                         return super.dispatchKeyEvent(event);
                     }
+                    if (keyCode == KeyEvent.KEYCODE_DPAD_UP){
+                        webView.evaluateJavascript("MyJSInterface.checkCanvasPresence()", null);
+                        if(canvas){
+                            webView.evaluateJavascript("document.getElementById('Channel').dispatchEvent(new MouseEvent('click'));",null);
+
+                        }
+                        return super.dispatchKeyEvent(event);
+                    }
+
                     if (keyCode != KeyEvent.KEYCODE_BACK){
                         return super.dispatchKeyEvent(event);
                         //dialogBack.setVisibility(View.VISIBLE);
