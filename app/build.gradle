@@ -8,9 +8,10 @@ android {
     defaultConfig {
         applicationId "com.ubetta.lcsl"
         minSdkVersion 21
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 32
         versionCode 2
-        versionName "1.2.2"
+        versionName "2.0.2"
 
     }
 
