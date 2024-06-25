@@ -195,30 +195,30 @@ public class MainActivity extends AppCompatActivity {
             mContext = c;
             mWebView = webView;
         }
-            @JavascriptInterface
-            public void checkCanvasPresence () {
-                // Execute JavaScript to check for the canvas element
-                mWebView.post(() -> mWebView.evaluateJavascript("var canvas = document.getElementsByClassName('explicit-resolution')[0];" +
-                        "if (canvas != null) { MyJSInterface.canvasPresent(); } else { null; }", null));
-            }
+//            @JavascriptInterface
+//            public void checkCanvasPresence () {
+//                // Execute JavaScript to check for the canvas element
+//                mWebView.post(() -> mWebView.evaluateJavascript("var canvas = document.getElementsByClassName('explicit-resolution')[0];" +
+//                        "if (canvas != null) { MyJSInterface.canvasPresent(); } else { null; }", null));
+//            }
 
-            @JavascriptInterface
-            public void canvasPresent () {
-                // Code to run in MainActivity when canvas is present
-                ((MainActivity) mContext).canvasIsthere();
-            }
-
-            @JavascriptInterface
-            public void canvasAbsent () {
-                // Code to run in MainActivity when canvas is absent
-                ((MainActivity) mContext).canvasIsAbsent();
-            }
-
-        @JavascriptInterface
-        public void evaluateScript(String script) {
-            // Execute the script using eval()
-            mWebView.post(() -> mWebView.evaluateJavascript("eval(" + script + ")", null));
-        }
+//            @JavascriptInterface
+//            public void canvasPresent () {
+//                // Code to run in MainActivity when canvas is present
+//                ((MainActivity) mContext).canvasIsthere();
+//            }
+//
+//            @JavascriptInterface
+//            public void canvasAbsent () {
+//                // Code to run in MainActivity when canvas is absent
+//                ((MainActivity) mContext).canvasIsAbsent();
+//            }
+//
+//        @JavascriptInterface
+//        public void evaluateScript(String script) {
+//            // Execute the script using eval()
+//            mWebView.post(() -> mWebView.evaluateJavascript("eval(" + script + ")", null));
+//        }
 
 
         // Other methods...
@@ -858,9 +858,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         ProgressBar loadingIndicator = findViewById(R.id.loading_indicator);
+        CookieManager.getInstance().setAcceptCookie(true);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        webView.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+        webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         webView.setWebViewClient(browser = new Browser(searchBar,webView));
         webView.setWebChromeClient(webClient = new WebClient(this));
-        webView.addJavascriptInterface (new MyJavaScriptInterface(this, webView), "MyJSInterface");
+//        webView.addJavascriptInterface (new MyJavaScriptInterface(this, webView), "MyJSInterface");
         WebSettings webSettings = webView.getSettings();
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setAllowUniversalAccessFromFileURLs(true);
@@ -1219,10 +1223,13 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar loadingIndicator = findViewById(R.id.loading_indicator);
         webView.setWebViewClient(browser = new Browser(searchBar,webView));
         webView.setWebChromeClient(webClient = new WebClient(this));
-
+        CookieManager.getInstance().setAcceptCookie(true);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        webView.getSettings().setUserAgentString("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+        webView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         WebSettings webSettings = webView.getSettings();
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setAllowUniversalAccessFromFileURLs(true);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setAllowUniversalAccessFromFileURLs(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webSettings.setDatabaseEnabled(true);
@@ -1613,23 +1620,23 @@ public class MainActivity extends AppCompatActivity {
                         webView.evaluateJavascript(jsCode, null);
                         return super.dispatchKeyEvent(event);
                     }
-                    if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
-                        webView.evaluateJavascript("MyJSInterface.checkCanvasPresence()", null);
-                        if(canvas){
-                            canvasIsPresent();
-                        }
+//                    if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+//                        webView.evaluateJavascript("MyJSInterface.checkCanvasPresence()", null);
+//                        if(canvas){
+//                            canvasIsPresent();
+//                        }
 
 
-                        return super.dispatchKeyEvent(event);
-                    }
-                    if (keyCode == KeyEvent.KEYCODE_DPAD_UP){
-                        webView.evaluateJavascript("MyJSInterface.checkCanvasPresence()", null);
-                        if(canvas){
-                            webView.evaluateJavascript("document.getElementById('Channel').dispatchEvent(new MouseEvent('click'));",null);
-
-                        }
-                        return super.dispatchKeyEvent(event);
-                    }
+//                        return super.dispatchKeyEvent(event);
+//                    }
+//                    if (keyCode == KeyEvent.KEYCODE_DPAD_UP){
+//                        webView.evaluateJavascript("MyJSInterface.checkCanvasPresence()", null);
+//                        if(canvas){
+//                            webView.evaluateJavascript("document.getElementById('Channel').dispatchEvent(new MouseEvent('click'));",null);
+//
+//                        }
+//                        return super.dispatchKeyEvent(event);
+//                    }
 
                     if (keyCode != KeyEvent.KEYCODE_BACK){
                         return super.dispatchKeyEvent(event);
